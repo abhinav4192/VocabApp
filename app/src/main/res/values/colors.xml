@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From DirectTV at http://brandcolors.net/ -->
+    <color name="colorPrimary">#00629b</color>
+    <color name="colorPrimaryDark">#003865</color>
+    <color name="colorAccent">#00a6d6</color>
+    <!-- From DirectTV Ends -->
+
+    <color name="colorDarkGrey">#e74c3c</color>
+</resources>
