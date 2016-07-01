@@ -1,8 +1,8 @@
-package fightingpit.vocabbuilder.Engine;
+package fightingpit.vocabBuilder.Engine;
 
 import java.util.ArrayList;
 
-import fightingpit.vocabbuilder.Model.WordWithDetails;
+import fightingpit.vocabBuilder.Model.WordWithDetails;
 
 /**
  * Created by abhinavgarg on 30/06/16.
@@ -10,6 +10,8 @@ import fightingpit.vocabbuilder.Model.WordWithDetails;
 public class WordListHelper {
 
     static ArrayList<WordWithDetails> mWordList = new ArrayList<>();
+
+
     static void updateWordList()
     {
         mWordList.clear();

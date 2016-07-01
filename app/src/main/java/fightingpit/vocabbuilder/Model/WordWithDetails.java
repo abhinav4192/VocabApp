@@ -1,4 +1,4 @@
-package fightingpit.vocabbuilder.Model;
+package fightingpit.vocabBuilder.Model;
 
 /**
  * Created by abhinavgarg on 30/06/16.

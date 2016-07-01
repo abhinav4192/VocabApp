@@ -1,4 +1,4 @@
-package fightingpit.vocabbuilder.Engine.Database;
+package fightingpit.vocabBuilder.Engine.Database;
 import android.provider.BaseColumns;
 
 /**
@@ -20,8 +20,8 @@ public final class DatabaseContract {
     };
 
     public static final String[] SQL_DROP_TABLE_ARRAY = {
-            WordMeaning.CREATE_TABLE,
-            WordSet.CREATE_TABLE,
+            WordMeaning.DROP_TABLE,
+            WordSet.DROP_TABLE,
             SetNameNumber.DROP_TABLE,
     };
 
