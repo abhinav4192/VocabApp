@@ -6,4 +6,55 @@
 
     <string name="action_settings">Settings</string>
     <string name="shared_preferences_file">SharedPreferences</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+    <!-- Default Preferences Keys and Strings related to Settings-->
+    <string name="pref_key_filter_status">pref_filter_status</string>
+    <string name="pref_key_filter_favorite">pref_filter_favorite</string>
+    <string name="pref_key_shuffle">pref_shuffle</string>
+    <string name="pref_key_show_meaning_word_list">pref_show_meaning_word_list</string>
+    <string name="pref_key_max_words_in_quiz">pref_max_words_in_quiz</string>
+    <string name="pref_key_reset_words_on_wrong_quiz">pref_reset_words_on_wrong_quiz</string>
+    <string name="pref_cat_filter_title">Filters</string>
+    <string name="pref_cat_wordList_title">Word List</string>
+    <string name="pref_cat_flashCard_title">Flash Card</string>
+    <string name="pref_cat_quiz_title">Quiz</string>
+    <string name="pref_filter_title_status">Status</string>
+    <string name="pref_filter_title_favorites">Favorites</string>
+    <string name="pref_filter_summary_favorites">Learn only favorite words</string>
+    <string name="pref_wordList_title_shuffle">Shuffle</string>
+    <string name="pref_wordList_summary_shuffle">Words will appear in random order</string>
+    <string name="pref_wordList_title_showMeanings">Show Meanings</string>
+    <string name="pref_wordList_summary_showMeanings">Show meanings by default. Click to show/hide meanings</string>
+    <string name="pref_quiz_title_maxWords">Maximum words in Quiz</string>
+    <string name="pref_quiz_title_resetProgress">Reset Progress</string>
+    <string name="pref_quiz_summary_resetProgress">For the words you answered wrong</string>
+
+    <string-array name="pref_max_words_list_titles">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+    </string-array>
+    <string-array name="pref_max_words_list_values">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="pref_master_learn_all_titles">
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+    </string-array>
+    <string-array name="pref_master_learn_all_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>

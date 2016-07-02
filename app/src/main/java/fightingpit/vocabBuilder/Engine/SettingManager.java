@@ -46,14 +46,14 @@ public class SettingManager {
     // Sort Methods.
 
     /**
-     * @return true is sorting is alphabetical.
+     * @return true if sorting is alphabetical.
      */
     public boolean sortIsAlphabetical() {
         return mSharedPref.getBoolean(ALPHA_OR_SHUFFLE, true);
     }
 
     /**
-     * @return true is sorting is shuffled.
+     * @return true if sorting is shuffled.
      */
     public boolean sortIsShuffled() {
         return !sortIsAlphabetical();
@@ -64,6 +64,7 @@ public class SettingManager {
      */
     public void sortSetAlphabetical() {
         mEditor.putBoolean(ALPHA_OR_SHUFFLE, true);
+        mEditor.commit();
     }
 
     /**
@@ -71,6 +72,7 @@ public class SettingManager {
      */
     public void sortSetShuffled() {
         mEditor.putBoolean(ALPHA_OR_SHUFFLE, false);
+        mEditor.commit();
     }
 
 
