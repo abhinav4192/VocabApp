@@ -72,7 +72,7 @@ public final class DatabaseContract {
 
     public static abstract class SetNameNumber implements BaseColumns {
 
-        public static final String TABLE_NAME     = "SET_NAME";
+        public static final String TABLE_NAME     = "SET_NAME_NUMBER";
         public static final String SET_NUMBER     = "SET_NUMBER";
         public static final String SET_NAME       = "SET_NAME";
 

@@ -2,6 +2,7 @@ package fightingpit.vocabBuilder.Engine;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import fightingpit.vocabBuilder.R;
 
@@ -11,6 +12,7 @@ import fightingpit.vocabBuilder.R;
 public class SettingManager {
 
     SharedPreferences mSharedPref;
+    SharedPreferences mDefaultSharedPref;
     SharedPreferences.Editor mEditor;
 
     private static final String ALPHA_OR_SHUFFLE = "ALPHA_OR_SHUFFLE";
@@ -19,6 +21,8 @@ public class SettingManager {
         mSharedPref = ContextManager.getCurrentActivityContext()
                 .getSharedPreferences(ContextManager.getCurrentActivityContext().getResources()
                         .getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
+        mDefaultSharedPref = PreferenceManager.getDefaultSharedPreferences(ContextManager
+                .getCurrentActivityContext());
         mEditor = mSharedPref.edit();
     }
 
@@ -73,6 +77,35 @@ public class SettingManager {
     public void sortSetShuffled() {
         mEditor.putBoolean(ALPHA_OR_SHUFFLE, false);
         mEditor.commit();
+    }
+
+    /**
+     * @return the number of current set user is learning.
+     */
+    public String getCurrentSetNumber(){
+        // TODO: Implement this.
+        return "1";
+    }
+
+    /**
+     * @return true if only favorite words to be showed.
+     */
+    public Boolean showOnlyFavorites(){
+        return mDefaultSharedPref.getBoolean(ContextManager.getCurrentActivityContext()
+                .getResources().getString(R.string.pref_key_filter_favorite),false);
+    }
+
+    /**
+     * @return Filter based on Learning Progress
+     *          "1", if to show All words
+     *          "2", if to show only Learning words
+     *          "3", if to show only Mastered words
+     */
+    public String getFilterStatus(){
+        Integer aFilterStatus = mDefaultSharedPref.getInt(ContextManager
+                .getCurrentActivityContext().getResources().getString(R.string
+                        .pref_key_filter_status),1);
+        return aFilterStatus.toString();
     }
 
 

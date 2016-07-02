@@ -11,6 +11,9 @@ public class WordWithDetails {
     Boolean mFavourite;
     Boolean mOriginal;
 
+    public WordWithDetails() {
+    }
+
     public WordWithDetails(String mWord, String mMeaning, String mSentence, Integer mProgress, Boolean mFavourite, Boolean mOriginal) {
         this.mWord = mWord;
         this.mMeaning = mMeaning;
@@ -42,6 +45,18 @@ public class WordWithDetails {
 
     public Boolean isOriginal() {
         return mOriginal;
+    }
+
+    public void setWord(String word) {
+        mWord = word;
+    }
+
+    public void setMeaning(String meaning) {
+        mMeaning = meaning;
+    }
+
+    public void setSentence(String sentence) {
+        mSentence = sentence;
     }
 
     public void setProgress(Integer progress) {

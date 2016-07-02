@@ -23,6 +23,8 @@ import fightingpit.vocabBuilder.Engine.SettingManager;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int MAX_PROGRESS = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +47,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-//        SharedPreferences sharedPrefs = PreferenceManager
-//                .getDefaultSharedPreferences(this);
-//        Toast.makeText(this,sharedPrefs.getString("pref_max_words_in_quiz",""),Toast.LENGTH_LONG)
-//                .show();
-
-
 
     }
 
