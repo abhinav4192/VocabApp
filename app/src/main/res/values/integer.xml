@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="MAX_PROGRESS">3</integer>
+    <integer name="REQ_CODE_ACTION_CHECK_TTS_DATA">101</integer>
 
 </resources>
