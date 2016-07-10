@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder;
+package fightingpit.VocabBuilder;
 
 import org.junit.Test;
 

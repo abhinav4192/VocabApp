@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder;
+package fightingpit.VocabBuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
-import fightingpit.vocabBuilder.Engine.ContextManager;
-import fightingpit.vocabBuilder.Engine.TextToSpeechManager;
+import fightingpit.VocabBuilder.Engine.ContextManager;
+import fightingpit.VocabBuilder.Engine.TextToSpeechManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder.Engine.Database;
+package fightingpit.VocabBuilder.Engine.Database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

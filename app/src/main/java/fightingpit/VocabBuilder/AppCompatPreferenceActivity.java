@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder;
+package fightingpit.VocabBuilder;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

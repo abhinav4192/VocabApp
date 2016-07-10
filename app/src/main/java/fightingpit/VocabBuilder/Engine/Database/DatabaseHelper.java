@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder.Engine.Database;
+package fightingpit.VocabBuilder.Engine.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import fightingpit.vocabBuilder.Engine.ContextManager;
-import fightingpit.vocabBuilder.R;
+import fightingpit.VocabBuilder.Engine.ContextManager;
+import fightingpit.VocabBuilder.R;
 
 /**
  * Created by abhinavgarg on 02/07/16.

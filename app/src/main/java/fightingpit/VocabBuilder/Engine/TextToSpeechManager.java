@@ -1,4 +1,4 @@
-package fightingpit.vocabBuilder.Engine;
+package fightingpit.VocabBuilder.Engine;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import fightingpit.vocabBuilder.R;
+import fightingpit.VocabBuilder.R;
 
 /**
  * Created by abhinavgarg on 03/07/16.

@@ -1,10 +1,10 @@
-package fightingpit.vocabBuilder.Engine;
+package fightingpit.VocabBuilder.Engine;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import fightingpit.vocabBuilder.R;
+import fightingpit.VocabBuilder.R;
 
 /**
  * Created by abhinavgarg on 02/07/16.

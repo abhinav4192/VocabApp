@@ -1,14 +1,14 @@
-package fightingpit.vocabBuilder.Engine.Database;
+package fightingpit.VocabBuilder.Engine.Database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import fightingpit.vocabBuilder.Engine.ContextManager;
-import fightingpit.vocabBuilder.Engine.SettingManager;
-import fightingpit.vocabBuilder.Model.WordWithDetails;
-import fightingpit.vocabBuilder.R;
+import fightingpit.VocabBuilder.Engine.ContextManager;
+import fightingpit.VocabBuilder.Engine.SettingManager;
+import fightingpit.VocabBuilder.Model.WordWithDetails;
+import fightingpit.VocabBuilder.R;
 
 /**
  * Created by abhinavgarg on 30/06/16.
