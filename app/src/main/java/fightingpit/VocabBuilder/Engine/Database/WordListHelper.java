@@ -15,7 +15,7 @@ import fightingpit.VocabBuilder.R;
  */
 public class WordListHelper extends DatabaseHelper {
 
-    static ArrayList<WordWithDetails> mWordList = new ArrayList<>();
+    ArrayList<WordWithDetails> mWordList = new ArrayList<>();
 
 
     /**
@@ -25,7 +25,7 @@ public class WordListHelper extends DatabaseHelper {
      * 2) Favorite Filter
      * 3) Progress Filter
      */
-    void updateWordList() {
+    public void updateWordList() {
         mWordList.clear();
         // Update Word list on basis of current preferences.
 
@@ -127,4 +127,7 @@ public class WordListHelper extends DatabaseHelper {
 
     }
 
+    public ArrayList<WordWithDetails> getWordList() {
+        return mWordList;
+    }
 }

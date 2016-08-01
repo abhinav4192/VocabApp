@@ -108,5 +108,11 @@ public class SettingManager {
         return aFilterStatus.toString();
     }
 
+    public boolean showMeanings() {
+        return mDefaultSharedPref.getBoolean(ContextManager
+                .getCurrentActivityContext().getResources().getString(R.string
+                        .pref_key_show_meaning_word_list), true);
+    }
+
 
 }

@@ -7,19 +7,10 @@ import android.content.Context;
  */
 public final class ContextManager {
 
-    static Context sMainActivityContext = null;
     static Context sCurrentActivityContext = null;
-
-    public static void setMainActivityContext(Context mainActivityContext) {
-        sMainActivityContext = mainActivityContext;
-    }
 
     public static void setCurrentActivityContext(Context currentActivityContext) {
         sCurrentActivityContext = currentActivityContext;
-    }
-
-    public static Context getMainActivityContext() {
-        return sMainActivityContext;
     }
 
     public static Context getCurrentActivityContext() {

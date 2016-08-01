@@ -11,6 +11,7 @@ import android.preference.Preference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
     /**
@@ -42,6 +43,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return true;
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Helper method to determine if the device has an extra-large screen. For

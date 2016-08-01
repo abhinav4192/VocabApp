@@ -12,19 +12,10 @@
     tools:context="fightingpit.VocabBuilder.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:id="@+id/fl_cm"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/test_editext"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Speak"
-        android:id="@+id/test_button"/>
-    </LinearLayout>
+
 </RelativeLayout>

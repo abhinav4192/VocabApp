@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:id="@+id/iv_mswiwl_dots"
+            android:src="@drawable/three_vertical_dots"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/iv_mswiwl_dots"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:id="@+id/iv_mswiwl_fav"
+            android:src="@drawable/star_outline"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/iv_mswiwl_fav"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:paddingRight="8dp"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textColor="@color/black87"
+            android:id="@+id/tv_mswiwl_word"
+            android:text="Fabricate"/>
+
+
+    </RelativeLayout>
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:el_duration="500"
+        app:el_expanded="true"
+        android:id="@+id/ll_mswiwl_mean_sen">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black75"
+                android:id="@+id/tv_mswiwl_meaning"
+                android:text="put together out of artificial or natural components"/>
+
+            <TextView
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="@color/black63"
+                android:id="@+id/tv_mswiwl_sentence"
+                android:text="Children fabricate stories. Hoping parents will be convinced."/>
+        </LinearLayout>
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+</LinearLayout>
