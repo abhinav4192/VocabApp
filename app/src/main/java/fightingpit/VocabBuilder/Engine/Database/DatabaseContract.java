@@ -62,7 +62,7 @@ public final class DatabaseContract {
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 WORD + " TEXT NOT NULL" + COMMA_SEP +
-                SET_NUMBER + " INTEGER NOT NULL" +
+                SET_NUMBER + " INTEGER NOT NULL" + COMMA_SEP +
                 " PRIMARY KEY (" + WORD + COMMA_SEP + SET_NUMBER + ")" +
                 " )";
 
@@ -76,9 +76,16 @@ public final class DatabaseContract {
         public static final String SET_NUMBER     = "SET_NUMBER";
         public static final String SET_NAME       = "SET_NAME";
 
+//        public static final String CREATE_TABLE = "CREATE TABLE " +
+//                TABLE_NAME + " (" +
+//                SET_NUMBER + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+//                SET_NAME + " TEXT NOT NULL" + COMMA_SEP +
+//                UNIQUE + " (" + SET_NAME + ")" +
+//                " )";
+
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                SET_NUMBER + " INTEGER PRIMARY KEY AUTOINCREMENT" + COMMA_SEP +
+                SET_NUMBER + " INTEGER PRIMARY KEY" + COMMA_SEP +
                 SET_NAME + " TEXT NOT NULL" + COMMA_SEP +
                 UNIQUE + " (" + SET_NAME + ")" +
                 " )";

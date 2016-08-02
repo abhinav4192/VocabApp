@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        Log.d("ABG","Creating new DB");
         // Creating Table
         for(int i=0; i < DatabaseContract.SQL_CREATE_TABLE_ARRAY.length; i++) {
             db.execSQL(DatabaseContract.SQL_CREATE_TABLE_ARRAY[i]);
@@ -50,6 +51,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        {
 //            Log.d("ABG", "DB Insert Failed");
 //        }
+
+        // Test data
+        db.execSQL("INSERT INTO SET_NAME_NUMBER VALUES(0,'Set0');");
+        for(Integer i=0;i<200;i++)
+        {
+            String aInsertQuery = "INSERT INTO WORD_LIST VALUES ('Testword " + i.toString() + "'," +
+                    "'Meaning of the word written above','Senence using the wod. Could be a Long" +
+                    " sentence',0,0,0);";
+            db.execSQL(aInsertQuery);
+            aInsertQuery = "INSERT INTO WORD_SET VALUES ('Testword " + i.toString() + "',0);";
+            db.execSQL(aInsertQuery);
+        }
 
 
     }

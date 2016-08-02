@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ((GlobalApplication) getApplicationContext()).init();
     }
 
 
@@ -133,7 +134,6 @@ public class MainActivity extends AppCompatActivity
                 // mTextToSpeechManager.onActivityResult(resultCode,data);
                 break;
             case SETTING_ACTIVITY_CODE:
-                Log.d("ABG", "Setting Activity Result");
                 updateNavigationView(mNavigationSelectedId, true);
                 break;
             default:

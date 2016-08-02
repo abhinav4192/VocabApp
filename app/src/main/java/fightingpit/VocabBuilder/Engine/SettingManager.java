@@ -82,30 +82,30 @@ public class SettingManager {
     /**
      * @return the number of current set user is learning.
      */
-    public String getCurrentSetNumber(){
+    public String getCurrentSetNumber() {
         // TODO: Implement this.
-        return "1";
+        return "0";
     }
 
     /**
      * @return true if only favorite words to be showed.
      */
-    public Boolean showOnlyFavorites(){
+    public Boolean showOnlyFavorites() {
         return mDefaultSharedPref.getBoolean(ContextManager.getCurrentActivityContext()
-                .getResources().getString(R.string.pref_key_filter_favorite),false);
+                .getResources().getString(R.string.pref_key_filter_favorite), false);
     }
 
     /**
      * @return Filter based on Learning Progress
-     *          "1", if to show All words
-     *          "2", if to show only Learning words
-     *          "3", if to show only Mastered words
+     * "1", if to show All words
+     * "2", if to show only Learning words
+     * "3", if to show only Mastered words
      */
-    public String getFilterStatus(){
-        Integer aFilterStatus = mDefaultSharedPref.getInt(ContextManager
+    public String getFilterStatus() {
+        String aFilterStatus = mDefaultSharedPref.getString(ContextManager
                 .getCurrentActivityContext().getResources().getString(R.string
-                        .pref_key_filter_status),1);
-        return aFilterStatus.toString();
+                        .pref_key_filter_status), "1");
+        return aFilterStatus;
     }
 
     public boolean showMeanings() {

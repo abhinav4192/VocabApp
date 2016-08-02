@@ -14,8 +14,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:id="@+id/iv_mswiwl_dots"
@@ -26,6 +24,7 @@
             android:layout_toLeftOf="@id/iv_mswiwl_dots"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:layout_marginRight="4dp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:id="@+id/iv_mswiwl_fav"
@@ -37,9 +36,9 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             android:paddingRight="8dp"
-            android:textSize="21sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black87"
+            android:textColor="@color/black75"
             android:id="@+id/tv_mswiwl_word"
             android:text="Fabricate"/>
 

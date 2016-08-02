@@ -1,7 +1,10 @@
 package fightingpit.VocabBuilder.Engine.Database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,8 +18,7 @@ import fightingpit.VocabBuilder.R;
  */
 public class WordListHelper extends DatabaseHelper {
 
-    ArrayList<WordWithDetails> mWordList = new ArrayList<>();
-
+    private ArrayList<WordWithDetails> mWordList = new ArrayList<>();
 
     /**
      * Updates the Word list with words based on current settings.
@@ -60,20 +62,21 @@ public class WordListHelper extends DatabaseHelper {
             String aQuery = "SELECT * FROM " + DatabaseContract.WordMeaning.TABLE_NAME + " INNER " +
                     "JOIN" +
                     " " + DatabaseContract.WordSet.TABLE_NAME + " WHERE " + DatabaseContract.WordSet
-                    .SET_NUMBER + "=? AND" + DatabaseContract.WordMeaning.WORD + "=" +
+                    .SET_NUMBER + "=? AND " + DatabaseContract.WordMeaning.TABLE_NAME + "." +
+            DatabaseContract.WordMeaning.WORD + "=" + DatabaseContract.WordSet.TABLE_NAME + "." +
                     DatabaseContract.WordSet.WORD + " ORDER BY " + DatabaseContract.WordMeaning
                     .WORD;
             String[] aSelectionArgs = {aSetNumberString};
             c = aReadableDatabase.rawQuery(aQuery, aSelectionArgs);
         }
+        Log.d("ABG", "Size:" + c.getCount());
         c.moveToFirst();
-        while (c.isAfterLast()) {
-
+        while (!c.isAfterLast()) {
             WordWithDetails aWordWithDetails = new WordWithDetails();
 
+
             // 2) Applying Favorite Filter
-            if ((c.getString(c.getColumnIndexOrThrow(DatabaseContract.WordMeaning.FAVOURITE)))
-                    .equalsIgnoreCase("Y")) {
+            if ((c.getInt(c.getColumnIndexOrThrow(DatabaseContract.WordMeaning.FAVOURITE)))==1) {
                 aWordWithDetails.setFavourite(true);
             } else {
                 if (aSettingManager.showOnlyFavorites()) {
@@ -114,8 +117,7 @@ public class WordListHelper extends DatabaseHelper {
                     .WordMeaning.SENTENCE)));
             aWordWithDetails.setProgress(aProgress);
 
-            if ((c.getString(c.getColumnIndexOrThrow(DatabaseContract.WordMeaning.ORIGINAL)))
-                    .equalsIgnoreCase("Y")) {
+            if ((c.getInt(c.getColumnIndexOrThrow(DatabaseContract.WordMeaning.ORIGINAL)))==0) {
                 aWordWithDetails.setOriginal(true);
             } else {
                 aWordWithDetails.setOriginal(false);
@@ -123,11 +125,43 @@ public class WordListHelper extends DatabaseHelper {
             mWordList.add(aWordWithDetails);
             c.moveToNext();
         }
+        Log.d("ABG", "Size Queue:" + mWordList.size());
         c.close();
-
+        aReadableDatabase.close();
     }
 
     public ArrayList<WordWithDetails> getWordList() {
         return mWordList;
     }
+
+    public void updateFavourite(final String iWord, final String iMeaning, final boolean iFavourite)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                SQLiteDatabase aReadableDatabase = getWritableDatabase();
+
+                // New value for one column
+                ContentValues values = new ContentValues();
+                if(iFavourite) {
+                    values.put(DatabaseContract.WordMeaning.FAVOURITE, 1);
+                }
+                else {
+                    values.put(DatabaseContract.WordMeaning.FAVOURITE, 0);
+                }
+
+                String selection = DatabaseContract.WordMeaning.WORD + "=? AND " +
+                        DatabaseContract.WordMeaning.MEANING + "=?";
+                String[] selectionArgs = { iWord, iMeaning};
+
+                aReadableDatabase.update(
+                        DatabaseContract.WordMeaning.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+                aReadableDatabase.close();
+            }
+        });
+    }
+
 }

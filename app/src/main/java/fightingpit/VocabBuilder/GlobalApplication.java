@@ -1,6 +1,9 @@
 package fightingpit.VocabBuilder;
 
 import android.app.Application;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import fightingpit.VocabBuilder.Engine.ContextManager;
 import fightingpit.VocabBuilder.Engine.Database.WordListHelper;
@@ -13,20 +16,14 @@ import fightingpit.VocabBuilder.Model.WordWithDetails;
  * multiple activities, fragments.
  */
 public class GlobalApplication extends Application {
-    WordListHelper mWordListHelper = new WordListHelper();
+    WordListHelper mWordListHelper = null;
+
+    public void init()
+    {
+        mWordListHelper = new WordListHelper();
+    }
 
     public WordListHelper getWordListHelper() {
-
-        // Test Code for WordList to be used throughout appplication.
-        for(Integer i=0;i<50;i++)
-        {
-            WordWithDetails aWord = new WordWithDetails();
-            aWord.setWord("Word " + i.toString());
-            aWord.setMeaning("Word Meaning " + i.toString());
-            aWord.setSentence("Sentence for the meaning. Long sentence. Really Long. " + i.toString
-                    ());
-            mWordListHelper.getWordList().add(aWord);
-        }
         return mWordListHelper;
     }
 
