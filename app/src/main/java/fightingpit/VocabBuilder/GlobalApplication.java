@@ -1,14 +1,8 @@
 package fightingpit.VocabBuilder;
 
 import android.app.Application;
-import android.util.Log;
 
-import java.util.ArrayList;
-
-import fightingpit.VocabBuilder.Engine.ContextManager;
-import fightingpit.VocabBuilder.Engine.Database.WordListHelper;
-import fightingpit.VocabBuilder.Engine.SettingManager;
-import fightingpit.VocabBuilder.Model.WordWithDetails;
+import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
 
 /**
  * Created by abhinavgarg on 31/07/16.
@@ -16,15 +10,15 @@ import fightingpit.VocabBuilder.Model.WordWithDetails;
  * multiple activities, fragments.
  */
 public class GlobalApplication extends Application {
-    WordListHelper mWordListHelper = null;
+    DatabaseMethods mDatabaseMethods = null;
 
     public void init()
     {
-        mWordListHelper = new WordListHelper();
+        mDatabaseMethods = new DatabaseMethods();
     }
 
-    public WordListHelper getWordListHelper() {
-        return mWordListHelper;
+    public DatabaseMethods getDatabaseMethods() {
+        return mDatabaseMethods;
     }
 
 }

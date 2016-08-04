@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import fightingpit.VocabBuilder.Engine.ContextManager;
-import fightingpit.VocabBuilder.Engine.Database.WordListHelper;
+import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
 import fightingpit.VocabBuilder.Engine.SettingManager;
 import fightingpit.VocabBuilder.GlobalApplication;
 import fightingpit.VocabBuilder.Model.WordWithDetails;
@@ -28,15 +28,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
     static Context mContext;
     ArrayList<WordWithDetails> mWordList; // Reference to the word list
     boolean[] mShowMeaning; // To hold if the word meanings are shown or hidden.
-    WordListHelper mWordListHelper;
+    DatabaseMethods mDatabaseMethods;
     SettingManager mSettingManager;
 
     public WordListAdapter() {
         mContext = ContextManager.getCurrentActivityContext();
-        mWordListHelper = ((GlobalApplication) mContext.getApplicationContext())
-                .getWordListHelper();
-        mWordListHelper.updateWordList();
-        mWordList = mWordListHelper.getWordList();
+        mDatabaseMethods = ((GlobalApplication) mContext.getApplicationContext())
+                .getDatabaseMethods();
+        mDatabaseMethods.updateWordList();
+        mWordList = mDatabaseMethods.getWordList();
         mShowMeaning = new boolean[mWordList.size()];
         mSettingManager = new SettingManager();
         Arrays.fill(mShowMeaning, mSettingManager.showMeanings());
@@ -101,12 +101,12 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                 if (currentWord.isFavourite()) {
                     currentWord.setFavourite(false);
                     favourite.setImageResource(R.drawable.star_outline);
-                    mWordListHelper.updateFavourite(currentWord.getWord(), currentWord.getMeaning
+                    mDatabaseMethods.updateFavourite(currentWord.getWord(), currentWord.getMeaning
                             (), false);
                 } else {
                     currentWord.setFavourite(true);
                     favourite.setImageResource(R.drawable.star_filled);
-                    mWordListHelper.updateFavourite(currentWord.getWord(), currentWord.getMeaning
+                    mDatabaseMethods.updateFavourite(currentWord.getWord(), currentWord.getMeaning
                             (), true);
                 }
             }

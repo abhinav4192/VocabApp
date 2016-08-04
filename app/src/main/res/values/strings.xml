@@ -60,6 +60,7 @@
 
     <string name="filter_learning">2</string>
     <string name="filter_mastered">3</string>
+    <string name="all_words">All Words</string>
 
 
 </resources>
