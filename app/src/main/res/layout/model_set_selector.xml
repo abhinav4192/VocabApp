@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rl_mss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp">
+
+    <CheckBox
+        android:id="@+id/cb_mss_CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:clickable="false"/>
+
+    <TextView
+        android:id="@+id/tv_mss_SetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:layout_alignLeft="@id/cb_mss_CheckBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/black75"
+        android:text="Hello"/>
+
+</RelativeLayout>

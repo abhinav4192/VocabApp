@@ -21,7 +21,7 @@
     <string name="pref_cat_wordList_title">Word List</string>
     <string name="pref_cat_flashCard_title">Flash Card</string>
     <string name="pref_cat_quiz_title">Quiz</string>
-    <string name="pref_filter_title_status">Status</string>
+    <string name="pref_filter_title_progress">Progress</string>
     <string name="pref_filter_title_favorites">Favorites</string>
     <string name="pref_filter_summary_favorites">Learn only favorite words</string>
     <string name="pref_wordList_title_shuffle">Shuffle</string>
@@ -61,6 +61,42 @@
     <string name="filter_learning">2</string>
     <string name="filter_mastered">3</string>
     <string name="all_words">All Words</string>
+
+    <string-array name="empty_array"/>
+    <string-array name="weekdays_values">
+    <item>All Words</item>
+    <item>Learning</item>
+    <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+    </string-array>
+    <string-array name="weekdays">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+        <item>All Words</item>
+        <item>Learning</item>
+        <item>Mastered</item>
+    </string-array>
 
 
 </resources>

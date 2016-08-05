@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,16 +47,19 @@ public class DatabaseMethods extends DatabaseHelper {
         clearWordList();
         SettingManager aSettingManager = new SettingManager();
         ArrayList<SetDetails> aAllSelectedSets = getAllSets(true);
+        for(SetDetails s: aAllSelectedSets){
+            Log.d("ABG", "Selected:" + s.getNameOfSet());
+        }
 
         for (SetDetails aSet : aAllSelectedSets) {
             if (aSet.getNameOfSet().equalsIgnoreCase(ContextManager.getCurrentActivityContext()
                     .getResources().getString(R.string.all_words))) {
-                updateWordListByAllWords(true, aSettingManager.getFilterStatus());
-            } else if (Pattern.matches("Alphabet [A-Z]]", aSet.getNameOfSet())) {
-                updateWordListByAlphabet(aSet.getNameOfSet().split(" ")[1], true, aSettingManager
+                updateWordListByAllWords(aSettingManager.showOnlyFavorites(), aSettingManager.getFilterStatus());
+            } else if (Pattern.matches("Alphabet [A-Z]", aSet.getNameOfSet())) {
+                updateWordListByAlphabet(aSet.getNameOfSet().split(" ")[1], aSettingManager.showOnlyFavorites(), aSettingManager
                         .getFilterStatus());
             } else {
-                updateWordListBySets(aSet.getNumberOfSet().toString(), true, aSettingManager
+                updateWordListBySets(aSet.getNumberOfSet().toString(), aSettingManager.showOnlyFavorites(), aSettingManager
                         .getFilterStatus());
             }
         }
@@ -64,6 +68,8 @@ public class DatabaseMethods extends DatabaseHelper {
 
     public void updateWordListByAllWords(boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
+
+        Log.d("ABG","updateWordListByAllWords");
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query(
@@ -75,9 +81,11 @@ public class DatabaseMethods extends DatabaseHelper {
 
     public void updateWordListByAlphabet(String iAlphabet, boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
+
+        Log.d("ABG","updateWordListByAlphabet:" + iAlphabet);
         SQLiteDatabase db = getReadableDatabase();
-        String selection = DatabaseContract.WordMeaning.WORD + " like '?%";
-        String[] selectionArgs = {iAlphabet};
+        String selection = DatabaseContract.WordMeaning.WORD + " LIKE ?";
+        String[] selectionArgs = {iAlphabet+"%"};
         Cursor c = db.query(
                 DatabaseContract.WordMeaning.TABLE_NAME, null, selection, selectionArgs,
                 null, null, null);
@@ -86,6 +94,7 @@ public class DatabaseMethods extends DatabaseHelper {
 
     public void updateWordListBySets(String iSetNumber, boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
+        Log.d("ABG","updateWordListBySets:" + iSetNumber);
         SQLiteDatabase db = getReadableDatabase();
         String aQuery = "SELECT * FROM " + DatabaseContract.WordMeaning.TABLE_NAME + " INNER JOIN" +
                 " " +
@@ -102,8 +111,10 @@ public class DatabaseMethods extends DatabaseHelper {
     private void applyFiltersOnWordList(Cursor c, boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
 
+        Log.d("ABG","applyFiltersOnWordList");
         c.moveToFirst();
         while (!c.isAfterLast()) {
+            //Log.d("ABG","in while");
             WordWithDetails aWordWithDetails = new WordWithDetails();
 
             // Apply Favourite Filter
@@ -111,7 +122,7 @@ public class DatabaseMethods extends DatabaseHelper {
                 aWordWithDetails.setFavourite(true);
             } else {
                 if (aApplyFavouriteFilter) {
-                    c.moveToFirst();
+                    c.moveToNext();
                     continue;
                 } else {
                     aWordWithDetails.setFavourite(false);
@@ -157,12 +168,14 @@ public class DatabaseMethods extends DatabaseHelper {
             // To prevent duplicate words in list.
             if (mWordSet.add(aWordWithDetails))
                 mWordList.add(aWordWithDetails);
+            c.moveToNext();
         }
         c.close();
 
     }
 
     public ArrayList<SetDetails> getAllSets(boolean iGetOnlySelected) {
+        Log.d("ABG","getAllSets");
         SQLiteDatabase db = getReadableDatabase();
 
         ArrayList<SetDetails> aList = new ArrayList<>();
@@ -189,6 +202,7 @@ public class DatabaseMethods extends DatabaseHelper {
             aSetDetails.setNumberOfSet(c.getInt(c.getColumnIndexOrThrow(DatabaseContract
                     .SetNameNumber.SET_NUMBER)));
             aList.add(aSetDetails);
+            c.moveToNext();
         }
         c.close();
         return aList;
@@ -235,6 +249,30 @@ public class DatabaseMethods extends DatabaseHelper {
         }
         c.close();
         return aReturnValue;
+    }
+
+    public void updateSetSelected(Integer iSetNumber, boolean iIsSelected){
+
+        SQLiteDatabase aReadableDatabase = getWritableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        if (iIsSelected) {
+            values.put(DatabaseContract.SetNameNumber.SELECTED, 1);
+        } else {
+            values.put(DatabaseContract.SetNameNumber.SELECTED, 0);
+        }
+
+        String selection = DatabaseContract.SetNameNumber.SET_NUMBER + "=?";
+        String[] selectionArgs = {iSetNumber.toString()};
+
+        aReadableDatabase.update(
+                DatabaseContract.SetNameNumber.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        aReadableDatabase.close();
+
     }
 
     public void updateFavourite(final String iWord, final String iMeaning, final boolean

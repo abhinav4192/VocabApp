@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        ContextManager.setCurrentActivityContext(this);
 
         switch (requestCode) {
             case 101:

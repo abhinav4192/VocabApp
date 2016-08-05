@@ -53,15 +53,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        }
 
         // Test data
-        db.execSQL("INSERT INTO SET_NAME_NUMBER VALUES(0,'Set0');");
-        for(Integer i=0;i<200;i++)
-        {
-            String aInsertQuery = "INSERT INTO WORD_LIST VALUES ('Testword " + i.toString() + "'," +
-                    "'Meaning of the word written above','Senence using the wod. Could be a Long" +
-                    " sentence',0,0,0);";
-            db.execSQL(aInsertQuery);
-            aInsertQuery = "INSERT INTO WORD_SET VALUES ('Testword " + i.toString() + "',0);";
-            db.execSQL(aInsertQuery);
+        for(char c = 'A'; c <='Z';c++) {
+            for (Integer i = 0; i < 20; i++) {
+                String aInsertQuery = "INSERT INTO WORD_LIST VALUES ('"+c+"estword " + i.toString()
+                        + "'," +
+
+                        "'Meaning of the word written above','Senence using the wod. Could be a " +
+                        "Long" +
+                        " sentence',0,0,0);";
+                db.execSQL(aInsertQuery);
+                aInsertQuery = "INSERT INTO WORD_SET VALUES ('"+c+"estword " + i.toString() + "'," +
+                        "0);";
+                db.execSQL(aInsertQuery);
+            }
+        }
+
+        db.execSQL("INSERT INTO SET_NAME_NUMBER (SET_NAME, SELECTED) VALUES ('All Words',1)");
+        for(char c = 'A'; c <='Z';c++){
+            db.execSQL("INSERT INTO SET_NAME_NUMBER (SET_NAME, SELECTED) VALUES ('Alphabet "+
+                    c +"',0)");
         }
 
 

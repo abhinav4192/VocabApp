@@ -10,7 +10,7 @@
             android:key="@string/pref_key_filter_status"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
-            android:title="@string/pref_filter_title_status"/>
+            android:title="@string/pref_filter_title_progress"/>
     </PreferenceCategory>
 
     <CheckBoxPreference
@@ -18,6 +18,10 @@
         android:key="pref_filter_favorite"
         android:summary="@string/pref_filter_summary_favorites"
         android:title="@string/pref_filter_title_favorites"/>
+    <Preference
+        android:key="pref_set_selection"
+        android:enabled="true"
+        android:title="Sets"/>
 
 
     <PreferenceCategory

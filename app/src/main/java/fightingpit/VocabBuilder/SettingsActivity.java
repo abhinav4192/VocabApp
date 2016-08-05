@@ -3,6 +3,7 @@ package fightingpit.VocabBuilder;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,9 +12,25 @@ import android.preference.Preference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckedTextView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class SettingsActivity extends AppCompatPreferenceActivity {
+import java.util.ArrayList;
+
+import fightingpit.VocabBuilder.Adapter.SetAdapter;
+import fightingpit.VocabBuilder.Engine.ContextManager;
+import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
+import fightingpit.VocabBuilder.Model.SetDetails;
+
+public class SettingsActivity extends AppCompatPreferenceActivity{
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -54,6 +71,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     /**
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
@@ -88,6 +107,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        ContextManager.setCurrentActivityContext(this);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new GeneralPreferenceFragment()).commit();
     }
 
@@ -130,6 +150,72 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("pref_max_words_in_quiz"));
             bindPreferenceSummaryToValue(findPreference("pref_filter_status"));
+
+            Preference connectToNewComputer= findPreference("pref_set_selection");
+
+            connectToNewComputer.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.d("ABG", preference.getKey());
+
+                    showSetSelectorAlert();
+
+                    return false;
+                }
+            });
+
         }
+
+        private void showSetSelectorAlert(){
+
+            final DatabaseMethods aDatabaseMethods = new DatabaseMethods();
+            final ArrayList<SetDetails> aSets = aDatabaseMethods.getAllSets(false);
+            final int aSetSize = aSets.size();
+
+
+            final SetAdapter aSetAdapter = new SetAdapter(aSets);
+
+            final AlertDialog aAlertDialog = new AlertDialog.Builder(ContextManager
+                    .getCurrentActivityContext
+                            (), R.style.ThemeAlertDialog)
+                    .setTitle("Select sets")
+                    .setAdapter(aSetAdapter, null)
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("CANCEL",null)
+                    .setNeutralButton("Clear All", null)
+                    .create();
+            aAlertDialog.show();
+
+            aAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(aSetAdapter.updateSelectedSetInDB()){
+                        aAlertDialog.dismiss();
+                    }else {
+                        Toast.makeText(ContextManager.getCurrentActivityContext(), "Please select" +
+                                " at least one set.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            aAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    aAlertDialog.dismiss();
+                }
+            });
+
+            aAlertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for(int i=0;i < aSetSize; i++) {
+                        aSets.get(i).setSelected(false);
+                    }
+                    aSetAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+
     }
 }
