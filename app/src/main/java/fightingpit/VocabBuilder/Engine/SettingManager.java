@@ -36,6 +36,10 @@ public class SettingManager {
         return mSharedPref.getString(key, "");
     }
 
+    public Integer getIntegerValue(String key) {
+        return mSharedPref.getInt(key, -1);
+    }
+
     /**
      * Generic Method to update Shared Preference. Shared Preference will we stored as String.
      *
@@ -47,45 +51,19 @@ public class SettingManager {
         mEditor.commit();
     }
 
-    // Sort Methods.
-
-    /**
-     * @return true if sorting is alphabetical.
-     */
-    public boolean sortIsAlphabetical() {
-        return mSharedPref.getBoolean(ALPHA_OR_SHUFFLE, true);
+    public void updateValue(String key, Integer value) {
+        mEditor.putInt(key, value);
+        mEditor.commit();
     }
 
     /**
      * @return true if sorting is shuffled.
      */
-    public boolean sortIsShuffled() {
-        return !sortIsAlphabetical();
+    public boolean toShuffle() {
+        return mDefaultSharedPref.getBoolean(ContextManager.getCurrentActivityContext()
+                .getResources().getString(R.string.pref_key_shuffle), false);
     }
 
-    /**
-     * Set sort as Alphabetical.
-     */
-    public void sortSetAlphabetical() {
-        mEditor.putBoolean(ALPHA_OR_SHUFFLE, true);
-        mEditor.commit();
-    }
-
-    /**
-     * Set sort as Shuffled.
-     */
-    public void sortSetShuffled() {
-        mEditor.putBoolean(ALPHA_OR_SHUFFLE, false);
-        mEditor.commit();
-    }
-
-    /**
-     * @return the number of current set user is learning.
-     */
-    public String getCurrentSetNumber() {
-        // TODO: Implement this.
-        return "0";
-    }
 
     /**
      * @return true if only favorite words to be showed.
@@ -107,6 +85,10 @@ public class SettingManager {
                         .pref_key_filter_status), "1");
         return aFilterStatus;
     }
+
+    /**
+     * @return true if the meanings of the words are to be shown by default.
+     */
 
     public boolean showMeanings() {
         return mDefaultSharedPref.getBoolean(ContextManager

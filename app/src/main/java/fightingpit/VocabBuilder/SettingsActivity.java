@@ -26,8 +26,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fightingpit.VocabBuilder.Adapter.SetAdapter;
+import fightingpit.VocabBuilder.Engine.CommonUtils;
 import fightingpit.VocabBuilder.Engine.ContextManager;
 import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
+import fightingpit.VocabBuilder.Engine.SettingManager;
 import fightingpit.VocabBuilder.Model.SetDetails;
 
 public class SettingsActivity extends AppCompatPreferenceActivity{
@@ -39,7 +41,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
-
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
@@ -70,8 +71,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -151,15 +150,27 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
             bindPreferenceSummaryToValue(findPreference("pref_max_words_in_quiz"));
             bindPreferenceSummaryToValue(findPreference("pref_filter_status"));
 
-            Preference connectToNewComputer= findPreference("pref_set_selection");
+            Preference aShufflePreference = findPreference("pref_shuffle");
+            aShufflePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if((boolean) newValue){
+                        // Means user has changed the Shuffle from false to true. In this case
+                        // the shuffle sequence should be changed even if all other criteria
+                        // remains same. Therefore, set number of words in shuffle sequence ot zero.
+                        (new SettingManager()).updateValue(ContextManager.getCurrentActivityContext()
+                                .getResources().getString(R.string
+                                        .shuffle_sequence_number_of_words),0);
+                    }
+                    return true;
+                }
+            });
 
-            connectToNewComputer.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            Preference aSetPreference= findPreference("pref_set_selection");
+            aSetPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Log.d("ABG", preference.getKey());
-
                     showSetSelectorAlert();
-
                     return false;
                 }
             });

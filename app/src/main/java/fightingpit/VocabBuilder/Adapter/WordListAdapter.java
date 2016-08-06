@@ -13,6 +13,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import fightingpit.VocabBuilder.Engine.CommonUtils;
 import fightingpit.VocabBuilder.Engine.ContextManager;
 import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
 import fightingpit.VocabBuilder.Engine.SettingManager;
@@ -33,12 +34,14 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
 
     public WordListAdapter() {
         mContext = ContextManager.getCurrentActivityContext();
+        mSettingManager = new SettingManager();
         mDatabaseMethods = ((GlobalApplication) mContext.getApplicationContext())
                 .getDatabaseMethods();
+
         mDatabaseMethods.updateWordList();
         mWordList = mDatabaseMethods.getWordList();
+        handleShuffle();
         mShowMeaning = new boolean[mWordList.size()];
-        mSettingManager = new SettingManager();
         Arrays.fill(mShowMeaning, mSettingManager.showMeanings());
     }
 
@@ -141,6 +144,25 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
             favourite = (ImageView) itemView.findViewById(R.id.iv_mswiwl_fav);
             moreOptions = (ImageView) itemView.findViewById(R.id.iv_mswiwl_dots);
             meaningAndSentence = (ExpandableLayout) itemView.findViewById(R.id.ll_mswiwl_mean_sen);
+        }
+    }
+
+    private void handleShuffle(){
+        if(mSettingManager.toShuffle()){
+            ArrayList<Integer> aShuffleSequence;
+            Integer aWordListSize = mWordList.size();
+            if(mSettingManager.getIntegerValue(mContext.getResources().getString(R.string
+                    .shuffle_sequence_number_of_words)) == aWordListSize){
+                aShuffleSequence = CommonUtils.getShuffleSequence();
+            }else{
+                aShuffleSequence = CommonUtils.updateShuffleSequence(aWordListSize);
+            }
+
+            ArrayList<WordWithDetails> aTempList = new ArrayList<>();
+            for(Integer i: aShuffleSequence){
+                aTempList.add(mWordList.get(i));
+            }
+            mWordList = aTempList;
         }
     }
 

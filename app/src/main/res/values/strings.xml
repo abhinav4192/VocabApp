@@ -8,6 +8,7 @@
     <string name="shared_preferences_file">SharedPreferences</string>
     <string name="title_activity_settings">Settings</string>
     <string name="text_test_string">qtypadfghjzxcvb</string>
+    <string name="all_words">All Words</string>
 
 
     <!-- Default Preferences Keys and Strings related to Settings-->
@@ -31,6 +32,8 @@
     <string name="pref_quiz_title_maxWords">Maximum words in Quiz</string>
     <string name="pref_quiz_title_resetProgress">Reset Progress</string>
     <string name="pref_quiz_summary_resetProgress">For the words you answered wrong</string>
+    <string name="shuffle_sequence">shuffle_sequence</string>
+    <string name="shuffle_sequence_number_of_words">shuffle_sequence_number_of_words</string>
 
     <string-array name="pref_max_words_list_titles">
         <item>10</item>
@@ -60,43 +63,5 @@
 
     <string name="filter_learning">2</string>
     <string name="filter_mastered">3</string>
-    <string name="all_words">All Words</string>
-
-    <string-array name="empty_array"/>
-    <string-array name="weekdays_values">
-    <item>All Words</item>
-    <item>Learning</item>
-    <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-    </string-array>
-    <string-array name="weekdays">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-        <item>All Words</item>
-        <item>Learning</item>
-        <item>Mastered</item>
-    </string-array>
-
 
 </resources>
