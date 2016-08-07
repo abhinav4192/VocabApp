@@ -12,12 +12,6 @@ public class SetDetails {
     public SetDetails() {
     }
 
-    public SetDetails(String nameOfSet, Integer numberOfSet, boolean isSelected) {
-        mNameOfSet = nameOfSet;
-        mNumberOfSet = numberOfSet;
-        mIsSelected = isSelected;
-    }
-
     public String getNameOfSet() {
         return mNameOfSet;
     }

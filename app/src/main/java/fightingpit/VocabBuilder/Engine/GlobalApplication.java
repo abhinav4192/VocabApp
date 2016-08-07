@@ -1,4 +1,4 @@
-package fightingpit.VocabBuilder;
+package fightingpit.VocabBuilder.Engine;
 
 import android.app.Application;
 
@@ -11,14 +11,21 @@ import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
  */
 public class GlobalApplication extends Application {
     DatabaseMethods mDatabaseMethods = null;
+    TextToSpeechManager mTextToSpeechManager = null;
 
     public void init()
     {
         mDatabaseMethods = new DatabaseMethods();
+        mTextToSpeechManager = new TextToSpeechManager();
+        mTextToSpeechManager.init();
     }
 
     public DatabaseMethods getDatabaseMethods() {
         return mDatabaseMethods;
+    }
+
+    public TextToSpeechManager getTextToSpeechManager() {
+        return mTextToSpeechManager;
     }
 
 }

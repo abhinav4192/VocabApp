@@ -13,11 +13,14 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import fightingpit.VocabBuilder.Engine.CommonUtils;
 import fightingpit.VocabBuilder.Engine.ContextManager;
 import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
+import fightingpit.VocabBuilder.Engine.GlobalApplication;
 import fightingpit.VocabBuilder.Engine.SettingManager;
-import fightingpit.VocabBuilder.GlobalApplication;
+import fightingpit.VocabBuilder.Engine.TextToSpeechManager;
 import fightingpit.VocabBuilder.Model.WordWithDetails;
 import fightingpit.VocabBuilder.R;
 
@@ -31,12 +34,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
     boolean[] mShowMeaning; // To hold if the word meanings are shown or hidden.
     DatabaseMethods mDatabaseMethods;
     SettingManager mSettingManager;
+    TextToSpeechManager mTextToSpeechManager;
 
     public WordListAdapter() {
         mContext = ContextManager.getCurrentActivityContext();
         mSettingManager = new SettingManager();
         mDatabaseMethods = ((GlobalApplication) mContext.getApplicationContext())
                 .getDatabaseMethods();
+        mTextToSpeechManager = ((GlobalApplication) mContext.getApplicationContext())
+                .getTextToSpeechManager();
 
         mDatabaseMethods.updateWordList();
         mWordList = mDatabaseMethods.getWordList();
@@ -55,7 +61,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         final WordWithDetails currentWord = mWordList.get(position);
 
         TextView word = viewHolder.word;
@@ -64,6 +70,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         final ImageView favourite = viewHolder.favourite;
         ImageView moreOptions = viewHolder.moreOptions;
         final ExpandableLayout meaningAndSentence = viewHolder.meaningAndSentence;
+        final ImageView pronounce = viewHolder.pronounce;
+        pronounce.setVisibility(View.GONE);
 
         // build display
         word.setText(currentWord.getWord());
@@ -114,6 +122,24 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
                 }
             }
         });
+
+        moreOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pronounce.getVisibility() == View.VISIBLE) {
+                    pronounce.setVisibility(View.GONE);
+                } else {
+                    pronounce.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        pronounce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTextToSpeechManager.speak(currentWord.getWord());
+            }
+        });
     }
 
     @Override
@@ -121,15 +147,35 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         return mWordList.size();
     }
 
+    private void handleShuffle() {
+        if (mSettingManager.toShuffle()) {
+            ArrayList<Integer> aShuffleSequence;
+            Integer aWordListSize = mWordList.size();
+            if (mSettingManager.getIntegerValue(mContext.getResources().getString(R.string
+                    .shuffle_sequence_number_of_words)) == aWordListSize) {
+                aShuffleSequence = CommonUtils.getShuffleSequence();
+            } else {
+                aShuffleSequence = CommonUtils.updateShuffleSequence(aWordListSize);
+            }
+
+            ArrayList<WordWithDetails> aTempList = new ArrayList<>();
+            for (Integer i : aShuffleSequence) {
+                aTempList.add(mWordList.get(i));
+            }
+            mWordList = aTempList;
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView word;
-        public TextView meaning;
-        public TextView sentence;
-        public ImageView favourite;
-        public ImageView moreOptions;
-        public ExpandableLayout meaningAndSentence;
+        @BindView(R.id.tv_mswiwl_word) TextView word;
+        @BindView(R.id.tv_mswiwl_meaning) TextView meaning;
+        @BindView(R.id.tv_mswiwl_sentence) TextView sentence;
+        @BindView(R.id.iv_mswiwl_fav) ImageView favourite;
+        @BindView(R.id.iv_mswiwl_dots) ImageView moreOptions;
+        @BindView(R.id.ll_mswiwl_mean_sen) ExpandableLayout meaningAndSentence;
+        @BindView(R.id.iv_mswiwl_pronounce) ImageView pronounce;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -137,34 +183,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
-            word = (TextView) itemView.findViewById(R.id.tv_mswiwl_word);
-            meaning = (TextView) itemView.findViewById(R.id.tv_mswiwl_meaning);
-            sentence = (TextView) itemView.findViewById(R.id.tv_mswiwl_sentence);
-            favourite = (ImageView) itemView.findViewById(R.id.iv_mswiwl_fav);
-            moreOptions = (ImageView) itemView.findViewById(R.id.iv_mswiwl_dots);
-            meaningAndSentence = (ExpandableLayout) itemView.findViewById(R.id.ll_mswiwl_mean_sen);
+            ButterKnife.bind(this, itemView);
         }
     }
-
-    private void handleShuffle(){
-        if(mSettingManager.toShuffle()){
-            ArrayList<Integer> aShuffleSequence;
-            Integer aWordListSize = mWordList.size();
-            if(mSettingManager.getIntegerValue(mContext.getResources().getString(R.string
-                    .shuffle_sequence_number_of_words)) == aWordListSize){
-                aShuffleSequence = CommonUtils.getShuffleSequence();
-            }else{
-                aShuffleSequence = CommonUtils.updateShuffleSequence(aWordListSize);
-            }
-
-            ArrayList<WordWithDetails> aTempList = new ArrayList<>();
-            for(Integer i: aShuffleSequence){
-                aTempList.add(mWordList.get(i));
-            }
-            mWordList = aTempList;
-        }
-    }
-
 
 }

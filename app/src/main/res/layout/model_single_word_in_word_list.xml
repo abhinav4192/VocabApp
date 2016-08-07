@@ -2,80 +2,101 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="8dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp">
+        android:layout_height="36dp"
+        android:animateLayoutChanges="false"
+        >
+
         <ImageView
+            android:id="@+id/iv_mswiwl_dots"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:paddingTop="7dp"
+            android:clickable="true"
             android:paddingBottom="7dp"
-            android:id="@+id/iv_mswiwl_dots"
+            android:paddingTop="7dp"
             android:src="@drawable/three_vertical_dots"/>
+
         <ImageView
+            android:id="@+id/iv_mswiwl_pronounce"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
             android:layout_toLeftOf="@id/iv_mswiwl_dots"
+            android:paddingBottom="7dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_marginRight="4dp"
             android:paddingTop="7dp"
-            android:paddingBottom="7dp"
+            android:src="@drawable/speak"
+            android:visibility="gone"/>
+
+        <ImageView
             android:id="@+id/iv_mswiwl_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@id/iv_mswiwl_pronounce"
+            android:paddingBottom="7dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="7dp"
             android:src="@drawable/star_outline"/>
+
         <TextView
+            android:id="@+id/tv_mswiwl_word"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/iv_mswiwl_fav"
             android:gravity="center_vertical"
-            android:singleLine="true"
             android:paddingRight="8dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:singleLine="true"
+            android:text="Fabricate dsfs dg dsg dfgdfg dfg dfg dfg dfg d"
             android:textColor="@color/black75"
-            android:id="@+id/tv_mswiwl_word"
-            android:text="Fabricate"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
 
     </RelativeLayout>
-    <net.cachapa.expandablelayout.ExpandableLayout
-        android:layout_width="match_parent"
 
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/ll_mswiwl_mean_sen"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:el_duration="500"
-        app:el_expanded="true"
-        android:id="@+id/ll_mswiwl_mean_sen">
+        app:el_expanded="false">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:animateLayoutChanges="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textColor="@color/black75"
-                android:id="@+id/tv_mswiwl_meaning"
-                android:text="put together out of artificial or natural components"/>
 
             <TextView
+                android:id="@+id/tv_mswiwl_meaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
+                android:text="put together out of artificial or natural components"
+                android:textColor="@color/black75"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/tv_mswiwl_sentence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                android:textStyle="italic"
+                android:animateLayoutChanges="true"
+                android:text="Children fabricate stories. Hoping parents will be convinced."
                 android:textColor="@color/black63"
-                android:id="@+id/tv_mswiwl_sentence"
-                android:text="Children fabricate stories. Hoping parents will be convinced."/>
+                android:textSize="16sp"
+                android:textStyle="italic"/>
         </LinearLayout>
     </net.cachapa.expandablelayout.ExpandableLayout>
-
 
 </LinearLayout>

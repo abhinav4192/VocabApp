@@ -15,14 +15,17 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fightingpit.VocabBuilder.Engine.ContextManager;
+import fightingpit.VocabBuilder.Engine.GlobalApplication;
+import fightingpit.VocabBuilder.Engine.TextToSpeechManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    int mNavigationSelectedId = 0; // Keep Track of current navigation item selected by user. TODO: Change to Shared Preference
-    public static final int SETTING_ACTIVITY_CODE = 102;
+    int mNavigationSelectedId = R.id.word_list; // Keep Track of current navigation item selected by user. TODO: Change to Shared Preference
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
+    public static final int CHECK_TTS_ENGINE = 101;
+    public static final int SETTING_ACTIVITY_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ((GlobalApplication) getApplicationContext()).init();
+
+        // Init with Word List for now
+        updateNavigationView(mNavigationSelectedId,true);
     }
 
 
@@ -47,7 +53,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         Log.d("ABG", "on destroy called");
-        //mTextToSpeechManager.shutdown();
+        TextToSpeechManager aTextToSpeechManager = ((GlobalApplication)
+                getApplicationContext()).getTextToSpeechManager();
+        if(aTextToSpeechManager!=null){
+            aTextToSpeechManager.shutdown();
+        }
         super.onDestroy();
     }
 
@@ -130,8 +140,12 @@ public class MainActivity extends AppCompatActivity
         ContextManager.setCurrentActivityContext(this);
 
         switch (requestCode) {
-            case 101:
-                // mTextToSpeechManager.onActivityResult(resultCode,data);
+            case CHECK_TTS_ENGINE:
+                TextToSpeechManager aTextToSpeechManager = ((GlobalApplication)
+                        getApplicationContext()).getTextToSpeechManager();
+                if(aTextToSpeechManager!=null){
+                    aTextToSpeechManager.onActivityResult(resultCode,data);
+                }
                 break;
             case SETTING_ACTIVITY_CODE:
                 updateNavigationView(mNavigationSelectedId, true);
@@ -140,27 +154,4 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-
-    public void TTSTest(){
-
-        //        // For TTS testing
-        //        Button b1 = (Button) findViewById(R.id.test_button);
-        //        final EditText ed1 = (EditText) findViewById(R.id.test_editext);
-        //
-        //        mTextToSpeechManager = new TextToSpeechManager();
-        //        mTextToSpeechManager.init();
-        //
-        //        b1.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                String toSpeak = ed1.getText().toString();
-        //                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-        //
-        //                mTextToSpeechManager.speak(toSpeak);
-        //            }
-        //        });
-    }
-
-
-
 }

@@ -1,7 +1,5 @@
 package fightingpit.VocabBuilder.Adapter;
 
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import fightingpit.VocabBuilder.Engine.ContextManager;
 import fightingpit.VocabBuilder.Engine.Database.DatabaseMethods;
@@ -31,7 +28,7 @@ public class SetAdapter extends BaseAdapter {
     public SetAdapter(ArrayList<SetDetails> setDetailsArrayList) {
         mSetDetailsArrayList = setDetailsArrayList;
         mOriginalSelectedValue = new boolean[getCount()];
-        for(int i=0;i<getCount();i++){
+        for (int i = 0; i < getCount(); i++) {
             mOriginalSelectedValue[i] = getItem(i).isSelected();
         }
     }
@@ -56,7 +53,7 @@ public class SetAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(ContextManager.getCurrentActivityContext()).inflate
                     (R.layout.model_set_selector,
-                    parent, false);
+                            parent, false);
         }
 
         TextView aSetName = (TextView) convertView.findViewById(R.id.tv_mss_SetName);
@@ -74,23 +71,13 @@ public class SetAdapter extends BaseAdapter {
             }
         });
 
-//        aCheckBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
         aRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(aCheckBox.isChecked()){
-                    Log.d("ABG", "aCheckBox.isChecked");
+                if (aCheckBox.isChecked()) {
                     getItem(position).setSelected(false);
                     aCheckBox.setChecked(false);
-                }else{
-                    Log.d("ABG", "aCheckBox. not Checked");
+                } else {
                     getItem(position).setSelected(true);
                     aCheckBox.setChecked(true);
                 }
@@ -99,23 +86,24 @@ public class SetAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public boolean updateSelectedSetInDB(){
+    public boolean updateSelectedSetInDB() {
         DatabaseMethods aDatabaseMethods = new DatabaseMethods();
         int aCountSelected = 0;
-        for(int i=0;i<getCount();i++) {
+        for (int i = 0; i < getCount(); i++) {
             if (getItem(i).isSelected()) {
                 aCountSelected++;
             }
         }
-        if(aCountSelected>0){
-            for(int i=0;i<getCount();i++) {
+        if (aCountSelected > 0) {
+            for (int i = 0; i < getCount(); i++) {
                 SetDetails aSetDetails = getItem(i);
                 if (mOriginalSelectedValue[i] != aSetDetails.isSelected()) {
-                    aDatabaseMethods.updateSetSelected(aSetDetails.getNumberOfSet(), aSetDetails.isSelected());
+                    aDatabaseMethods.updateSetSelected(aSetDetails.getNumberOfSet(), aSetDetails
+                            .isSelected());
                 }
             }
             return true;
-        }else {
+        } else {
             return false;
         }
     }
