@@ -7,8 +7,6 @@
     <color name="colorAccent">#00a6d6</color>
     <!-- From DirectTV Ends -->
 
-    <color name="colorDarkGrey">#e74c3c</color>
-    <color name="black87">#CC000000</color>
     <color name="black75">#BF000000</color>
     <color name="black63">#A0000000</color>
 </resources>

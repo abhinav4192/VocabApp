@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import butterknife.BindString;
 import fightingpit.VocabBuilder.R;
 
 /**
@@ -20,11 +21,12 @@ public class TextToSpeechManager implements TextToSpeech.OnInitListener {
     private TextToSpeech mTextToSpeech;
     private Context mContext = ContextManager.getCurrentActivityContext();
     private Boolean mIsShutDownCalled = false;
-    // mToInstallTTS -  makes sure that user is not prompted for TTSM install unless they
+    // mToInstallTTS -  makes sure that user is not prompted for TTS install unless they
     // requested for word pronunciation.
     private Boolean mToInstallTTS = false;
     // mIsReady - true is TTS engine is ready to convert text to speech.
     private Boolean mIsReady = false;
+    @BindString(R.string.tts_voice_data_not_found) String mVoiceDataNotFound;
 
     /**
      * Initialize Text to Speech. Finds out if TTS engine present on device or not.
@@ -123,8 +125,7 @@ public class TextToSpeechManager implements TextToSpeech.OnInitListener {
      */
     private void installTTS() {
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(mContext);
-        aBuilder.setMessage("Voice data not found. Please install voice data for English (United " +
-                "States) or English (United Kingdom). Connect to Wi-Fi to install.");
+        aBuilder.setMessage(mVoiceDataNotFound);
         aBuilder.setCancelable(true);
         aBuilder.setNeutralButton("Install",
                 new DialogInterface.OnClickListener() {

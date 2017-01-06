@@ -1,7 +1,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:title="General">
+
+        <Preference
+            android:key="@string/pref_key_reminder"
+            android:enabled="true"
+            android:title="@string/pref_title_reminder"
+            android:summary="@string/pref_summary_reminder_default"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_cat_filter_title">
+
 
         <ListPreference
             android:defaultValue="1"
@@ -19,9 +30,10 @@
         android:summary="@string/pref_filter_summary_favorites"
         android:title="@string/pref_filter_title_favorites"/>
     <Preference
-        android:key="pref_set_selection"
+        android:key="@string/pref_key_set_selection"
         android:enabled="true"
-        android:title="Sets"/>
+        android:title="@string/pref_filter_title_sets"
+        android:summary="@string/pref_filter_summary_sets"/>
 
 
     <PreferenceCategory
@@ -38,28 +50,6 @@
             android:key="@string/pref_key_show_meaning_word_list"
             android:summary="@string/pref_wordList_summary_showMeanings"
             android:title="@string/pref_wordList_title_showMeanings"/>
-
-        <!--<SwitchPreference-->
-        <!--android:defaultValue="true"-->
-        <!--android:key="example_switch"-->
-        <!--android:summary="@string/pref_description_social_recommendations"-->
-        <!--android:title="@string/pref_title_social_recommendations"/>-->
-
-        <!--&lt;!&ndash; NOTE: EditTextPreference accepts EditText attributes. &ndash;&gt;-->
-        <!--&lt;!&ndash; NOTE: EditTextPreference's summary should be set to its value by the activity code. &ndash;&gt;-->
-        <!--<EditTextPreference-->
-        <!--android:capitalize="words"-->
-        <!--android:defaultValue="@string/pref_default_display_name"-->
-        <!--android:inputType="textCapWords"-->
-        <!--android:key="example_text"-->
-        <!--android:maxLines="1"-->
-        <!--android:selectAllOnFocus="true"-->
-        <!--android:singleLine="true"-->
-        <!--android:title="@string/pref_title_display_name"/>-->
-
-        <!--&lt;!&ndash; NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to-->
-        <!--dismiss it. &ndash;&gt;-->
-        <!--&lt;!&ndash; NOTE: ListPreference's summary should be set to its value by the activity code. &ndash;&gt;-->
 
     </PreferenceCategory>
 

@@ -9,9 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:animateLayoutChanges="false"
-        >
+        android:layout_height="36dp">
 
         <ImageView
             android:id="@+id/iv_mswiwl_dots"
@@ -19,7 +17,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:clickable="true"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:src="@drawable/three_vertical_dots"/>
