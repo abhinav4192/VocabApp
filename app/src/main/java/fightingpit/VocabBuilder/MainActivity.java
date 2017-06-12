@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("++ABG++","OnCreateCalled");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         ContextManager.setCurrentActivityContext(this);
@@ -122,7 +123,11 @@ public class MainActivity extends AppCompatActivity
                         .beginTransaction()
                         .replace(R.id.fl_cm, new WordListFragment())
                         .commit();
-            } else if (id == R.id.nav_gallery) {
+            } else if (id == R.id.flash_card) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_cm, new FlashCardFragment())
+                        .commit();
 
             } else if (id == R.id.nav_slideshow) {
 
@@ -148,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case SETTING_ACTIVITY_CODE:
+                ((GlobalApplication) getApplicationContext()).getDatabaseMethods().updateWordList();
                 updateNavigationView(mNavigationSelectedId, true);
                 break;
             default:

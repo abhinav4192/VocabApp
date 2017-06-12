@@ -29,7 +29,7 @@ import fightingpit.VocabBuilder.R;
  */
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
 
-    static Context mContext;
+    Context mContext;
     ArrayList<WordWithDetails> mWordList; // Reference to the word list
     boolean[] mShowMeaning; // To hold if the word meanings are shown or hidden.
     DatabaseMethods mDatabaseMethods;
@@ -44,7 +44,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
         mTextToSpeechManager = ((GlobalApplication) mContext.getApplicationContext())
                 .getTextToSpeechManager();
 
-        mDatabaseMethods.updateWordList();
         mWordList = mDatabaseMethods.getWordList();
         handleShuffle();
         mShowMeaning = new boolean[mWordList.size()];

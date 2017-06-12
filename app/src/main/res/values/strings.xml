@@ -14,7 +14,7 @@
 
     <string name="reminder_exception_text">Reminder is set.</string>
     <string name="reminder_set_for">"Set for "</string>
-    <string name="reminder_unset_modify">" . Unset/Modify"</string>
+    <string name="reminder_unset_modify">" Unset/Modify"</string>
     <string name="reminder_notification_text">Time to learn new words !!</string>
     <string name="reminder_option_unset">UNSET</string>
 

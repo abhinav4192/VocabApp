@@ -58,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String aInsertQuery = "INSERT INTO WORD_LIST VALUES ('"+c+"estword " + i.toString()
                         + "'," +
 
-                        "'Meaning of the word written above','Senence using the wod. Could be a " +
+                        "'Meaning of the word written above','Sentence using the wod. Could be a " +
                         "Long" +
                         " sentence',0,0,0);";
                 db.execSQL(aInsertQuery);

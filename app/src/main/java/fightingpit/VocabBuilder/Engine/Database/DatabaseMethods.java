@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import fightingpit.VocabBuilder.Engine.ContextManager;
@@ -23,16 +23,34 @@ import fightingpit.VocabBuilder.R;
  */
 public class DatabaseMethods extends DatabaseHelper {
 
-    Set<WordWithDetails> mWordSet = new HashSet<>();
+    private HashSet<WordWithDetails> mWordSet = new HashSet<>();
     private ArrayList<WordWithDetails> mWordList = new ArrayList<>();
+    private ArrayList<Integer> mLearningList = new ArrayList<>();
+    private Random mRandomGenerator = new Random();
+    private Integer mRandomIndex = -1;
+
+    public Integer getRandomWordListIndex(){
+        if(mRandomIndex >= 0){
+            Log.d("++ABG++", "mRandomIndex > 0");
+            Integer test = mLearningList.get(mRandomIndex);
+            Log.d("++ABG++", "mRandomIndex > 0 : " + test);
+            return mLearningList.get(mRandomIndex);
+        }
+        else{
+            Log.d("++ABG++", "mRandomIndex < 0");
+            return -1;
+        }
+
+    }
 
     public ArrayList<WordWithDetails> getWordList() {
         return mWordList;
     }
 
-    public void clearWordList() {
+    private void clearWordList() {
         mWordList.clear();
         mWordSet.clear();
+        mLearningList.clear();
     }
 
     /**
@@ -64,9 +82,10 @@ public class DatabaseMethods extends DatabaseHelper {
             }
         }
         Collections.sort(mWordList);
+        createLearningList();
     }
 
-    public void updateWordListByAllWords(boolean aApplyFavouriteFilter, String
+    private void updateWordListByAllWords(boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
 
         Log.d("ABG","updateWordListByAllWords");
@@ -79,7 +98,7 @@ public class DatabaseMethods extends DatabaseHelper {
     }
 
 
-    public void updateWordListByAlphabet(String iAlphabet, boolean aApplyFavouriteFilter, String
+    private void updateWordListByAlphabet(String iAlphabet, boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
 
         Log.d("ABG","updateWordListByAlphabet:" + iAlphabet);
@@ -92,7 +111,7 @@ public class DatabaseMethods extends DatabaseHelper {
         applyFiltersOnWordList(c, aApplyFavouriteFilter, aApplyProgressFilter);
     }
 
-    public void updateWordListBySets(String iSetNumber, boolean aApplyFavouriteFilter, String
+    private void updateWordListBySets(String iSetNumber, boolean aApplyFavouriteFilter, String
             aApplyProgressFilter) {
         Log.d("ABG","updateWordListBySets:" + iSetNumber);
         SQLiteDatabase db = getReadableDatabase();
@@ -133,7 +152,7 @@ public class DatabaseMethods extends DatabaseHelper {
             int aProgress = c.getInt(c.getColumnIndexOrThrow(DatabaseContract
                     .WordMeaning.PROGRESS));
             if (aApplyProgressFilter.equalsIgnoreCase(ContextManager.getCurrentActivityContext()
-                    .getResources().getString(R.string.filter_learning)) && aProgress ==
+                    .getResources().getString(R.string.filter_learning)) && aProgress >=
                     ContextManager
                             .getCurrentActivityContext().getResources().getInteger(R.integer
                             .MAX_PROGRESS)) {
@@ -141,7 +160,7 @@ public class DatabaseMethods extends DatabaseHelper {
                 continue;
             }
             if (aApplyProgressFilter.equalsIgnoreCase(ContextManager.getCurrentActivityContext()
-                    .getResources().getString(R.string.filter_mastered)) && aProgress !=
+                    .getResources().getString(R.string.filter_mastered)) && aProgress <
                     ContextManager
                             .getCurrentActivityContext().getResources().getInteger(R.integer
                             .MAX_PROGRESS)) {
@@ -253,7 +272,7 @@ public class DatabaseMethods extends DatabaseHelper {
 
     public void updateSetSelected(Integer iSetNumber, boolean iIsSelected){
 
-        SQLiteDatabase aReadableDatabase = getWritableDatabase();
+        SQLiteDatabase aWritableDatabase = getWritableDatabase();
 
         // New value for one column
         ContentValues values = new ContentValues();
@@ -266,12 +285,12 @@ public class DatabaseMethods extends DatabaseHelper {
         String selection = DatabaseContract.SetNameNumber.SET_NUMBER + "=?";
         String[] selectionArgs = {iSetNumber.toString()};
 
-        aReadableDatabase.update(
+        aWritableDatabase.update(
                 DatabaseContract.SetNameNumber.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
-        aReadableDatabase.close();
+        aWritableDatabase.close();
 
     }
 
@@ -280,7 +299,7 @@ public class DatabaseMethods extends DatabaseHelper {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                SQLiteDatabase aReadableDatabase = getWritableDatabase();
+                SQLiteDatabase aWritableDatabase = getWritableDatabase();
 
                 // New value for one column
                 ContentValues values = new ContentValues();
@@ -294,12 +313,86 @@ public class DatabaseMethods extends DatabaseHelper {
                         DatabaseContract.WordMeaning.MEANING + "=?";
                 String[] selectionArgs = {iWord, iMeaning};
 
-                aReadableDatabase.update(
+                aWritableDatabase.update(
                         DatabaseContract.WordMeaning.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs);
-                aReadableDatabase.close();
+                aWritableDatabase.close();
+            }
+        });
+    }
+
+
+    private void createLearningList(){
+        for(Integer i=0;i<mWordList.size();++i){
+            if(mWordList.get(i).getProgress() < ContextManager.getCurrentActivityContext()
+                    .getResources().getInteger(R.integer
+                    .MAX_PROGRESS)){
+                mLearningList.add(i);
+            }
+        }
+        Log.d("++ABG++", "mLearningList size:" + mLearningList.size());
+        updateRandomIndex();
+    }
+
+
+    private void updateRandomIndex(){
+        Integer learningListSize = mLearningList.size();
+        if(mLearningList.size()<=0){
+            mRandomIndex = -1;
+        } else{
+            Integer newRandomIndex = mRandomGenerator.nextInt(learningListSize);
+            if(newRandomIndex == mRandomIndex && learningListSize > 1){
+                updateRandomIndex();
+            } else {
+                mRandomIndex = newRandomIndex;
+            }
+        }
+        Log.d("++ABG++", "mRandomIndex value:" + mRandomIndex);
+
+    }
+    public void updateWordProgress(final Integer iWordListIndex, final boolean iIsCorrectAnswer) {
+        Integer progress = mWordList.get(iWordListIndex).getProgress();
+        Log.d("++ABG++","iWordListIndex:" + iWordListIndex + " progress:"+progress);
+        if (iIsCorrectAnswer) {
+            if (progress < ContextManager.getCurrentActivityContext()
+                    .getResources().getInteger(R.integer.MAX_PROGRESS)) {
+                mWordList.get(iWordListIndex).setProgress(++progress);
+            }
+        } else {
+            progress = 0;
+            mWordList.get(iWordListIndex).setProgress(0);
+        }
+        if(progress >= ContextManager.getCurrentActivityContext().getResources().getInteger(R
+                .integer.MAX_PROGRESS)){
+            mLearningList.remove(mRandomIndex.intValue()); // Integer to int to remove by index.
+        }
+        updateRandomIndex();
+        updateWordProgress(mWordList.get(iWordListIndex).getWord(), mWordList.get(iWordListIndex)
+                .getMeaning(), progress);
+
+    }
+
+    private void updateWordProgress(final String iWord, final String iMeaning, final Integer
+            iProgress){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                SQLiteDatabase aWritableDatabase = getWritableDatabase();
+                // New value for one column
+                ContentValues values = new ContentValues();
+                values.put(DatabaseContract.WordMeaning.PROGRESS, iProgress);
+                String selection = DatabaseContract.WordMeaning.WORD + "=? AND " +
+                        DatabaseContract.WordMeaning.MEANING + "=?";
+                String[] selectionArgs = {iWord, iMeaning};
+
+                aWritableDatabase.update(
+                        DatabaseContract.WordMeaning.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+                aWritableDatabase.close();
             }
         });
     }

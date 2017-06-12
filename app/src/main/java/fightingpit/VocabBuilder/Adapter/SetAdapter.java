@@ -23,6 +23,7 @@ public class SetAdapter extends BaseAdapter {
 
     ArrayList<SetDetails> mSetDetailsArrayList;
     boolean[] mOriginalSelectedValue;
+    Integer mAllWordPosition = -1; // Store position of set with name All Words
 
 
     public SetAdapter(ArrayList<SetDetails> setDetailsArrayList) {
@@ -30,6 +31,9 @@ public class SetAdapter extends BaseAdapter {
         mOriginalSelectedValue = new boolean[getCount()];
         for (int i = 0; i < getCount(); i++) {
             mOriginalSelectedValue[i] = getItem(i).isSelected();
+            if(getItem(i).getNameOfSet().equalsIgnoreCase("All Words")){
+                mAllWordPosition = i;
+            }
         }
     }
 
@@ -80,6 +84,22 @@ public class SetAdapter extends BaseAdapter {
                 } else {
                     getItem(position).setSelected(true);
                     aCheckBox.setChecked(true);
+
+                    if(position == mAllWordPosition){
+                        // If 'All Words' set is selected, un-check all other sets
+                        for(int i=0;i<mSetDetailsArrayList.size();++i){
+                            if(i!=position){
+                                getItem(i).setSelected(false);
+                            }
+                        }
+                        notifyDataSetChanged();
+                    }else{
+                        // If any Set other than 'All Words' is selected, un-check 'All Words'
+                        if(getItem(mAllWordPosition).isSelected()){
+                            getItem(mAllWordPosition).setSelected(false);
+                            notifyDataSetChanged();
+                        }
+                    }
                 }
             }
         });
